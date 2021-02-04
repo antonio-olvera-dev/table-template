@@ -1,7 +1,7 @@
 <template>
- 
- <Table/>
-
+ <div id="app">
+<Table/>
+  </div>
 </template>
 
 <script>
@@ -23,6 +23,10 @@ Table
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 </style>
