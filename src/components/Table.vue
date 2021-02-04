@@ -3,11 +3,19 @@
     <!-- ---Menu--- -->
     <div class="tb-refactor__menu">
       <div class="tb-refactor__menu__div1">
-        <div class="tb-refactor__menu__div2__div-input">
-          <input @focus="iconBool1 = true" @blur="iconBool1 = false" placeholder="10" class="tb-refactor__input__pag" type="text" />
+        <div class="tb-refactor__menu__div1__div-input">
+          <span> Show </span>
+          <!-- TODO  Work autocomplete-->
+          <input
+            @focus="iconBool1 = true"
+            @blur="iconBool1 = false"
+            placeholder="10"
+            class="tb-refactor__input__pag"
+            type="text"
+          />
           <i
             v-bind:class="{
-              'tb-refactor__menu__div2__div-input_icon-active': iconBool1,
+              'tb-refactor__menu__div1__div-input_icon-active': iconBool1,
             }"
             class="bi bi-chevron-down"
           ></i>
@@ -19,14 +27,14 @@
           class="tb-refactor__input__search"
           type="text"
         />
+        <button class="btn" type="button">Add User</button>
       </div>
     </div>
 
     <!-- ---Table--- -->
-    <table class="table">
+    <table class="table tb-refactor__tb">
       <!-- ---Head--- -->
-
-      <thead>
+      <thead class="tb-refactor__tb__thead">
         <tr>
           <th scope="col">#</th>
           <th scope="col">First</th>
@@ -34,9 +42,11 @@
           <th scope="col">Handle</th>
         </tr>
       </thead>
-      <tbody>
+
+      <!-- ---Body--- -->
+      <tbody class="tb-refactor__tb__tbody">
         <tr>
-          <th scope="row">1</th>
+          <td scope="row">1</td>
           <td>Mark</td>
           <td>Otto</td>
           <td>@mdo</td>
@@ -65,6 +75,9 @@ $c__default-dark: rgb(0, 0, 0);
 $c__primary: #0da692;
 $c__primary-light: #13ddc2;
 $c__primary-dark: #0b7769;
+$c__header-table: #f3f2f7;
+//-Padding-
+$pl__thead:1.5em;
 
 // ---Table---
 .tb-refactor {
@@ -75,7 +88,6 @@ $c__primary-dark: #0b7769;
   width: 100%;
   margin: 3em;
   border-radius: 0.3em;
-
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
 
   .tb-refactor__menu {
@@ -95,23 +107,44 @@ $c__primary-dark: #0b7769;
   }
   .tb-refactor__menu__div2 {
     @extend .tb-refactor__menu__div;
+    justify-content: flex-end;
   }
   // --Div-input adn icon---
-  .tb-refactor__menu__div2__div-input {
+  .tb-refactor__menu__div1__div-input {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
   }
-  .tb-refactor__menu__div2__div-input > i {
+  .tb-refactor__menu__div1__div-input > span {
+    color: $c__default;
+    margin-right: 0.5em;
+  }
+  .tb-refactor__menu__div1__div-input > i {
     color: $c__default-dark;
     font-size: 0.8em;
     margin-left: -1.5em;
     transition-duration: 200ms;
   }
-  .tb-refactor__menu__div2__div-input_icon-active {
+  .tb-refactor__menu__div1__div-input_icon-active {
     transform: rotate(-180deg);
     transition-duration: 200ms;
+  }
+  //--Button tb-refactor__menu__div2---
+  .tb-refactor__menu__div2 > button {
+    background-color: $c__primary;
+    color: white;
+    margin-left: 1em;
+    transition-duration: 100ms;
+  }
+  .tb-refactor__menu__div2 > button:focus {
+    box-shadow: none;
+  }
+  .tb-refactor__menu__div2 > button:hover {
+    box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.2);
+  }
+  .tb-refactor__menu__div2 > button:active {
+    box-shadow: none;
   }
   // ---Inputs---
   .tb-refactor__input {
@@ -144,7 +177,24 @@ $c__primary-dark: #0b7769;
   }
   .tb-refactor__input__search {
     @extend .tb-refactor__input;
-    width: 100%;
+    width: 60%;
   }
+  // ---Thead---
+  .tb-refactor__tb__thead {
+    background-color: $c__header-table;
+    text-align: start;
+  }
+    .tb-refactor__tb__thead > tr >th {
+    padding-left: $pl__thead;
+  }
+
+  //---Tbody---
+    .tb-refactor__tb__tbody {
+    text-align: start;
+  }
+  .tb-refactor__tb__tbody > tr > td {
+    padding-left: $pl__thead;
+  }
+
 }
 </style>
