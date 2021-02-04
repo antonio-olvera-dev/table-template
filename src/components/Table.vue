@@ -36,20 +36,74 @@
       <!-- ---Head--- -->
       <thead class="tb-refactor__tb__thead">
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>USER</span>
+              <div class="tb-refactor__tb__thead__div__div-icon">
+                <i class="bi bi-chevron-up"></i>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </th>
+
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>EMAIL</span>
+              <div class="tb-refactor__tb__thead__div__div-icon">
+                <i class="bi bi-chevron-up"></i>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </th>
+
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>ROLE</span>
+              <div class="tb-refactor__tb__thead__div__div-icon">
+                <i class="bi bi-chevron-up"></i>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </th>
+
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>PLAN</span>
+              <div class="tb-refactor__tb__thead__div__div-icon">
+                <i class="bi bi-chevron-up"></i>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </th>
+
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>STATUS</span>
+              <div class="tb-refactor__tb__thead__div__div-icon">
+                <i class="bi bi-chevron-up"></i>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+          </th>
+
+          <th scope="col">
+            <div class="tb-refactor__tb__thead__div">
+              <span>ACTION</span>
+
+            </div>
+          </th>
         </tr>
       </thead>
 
       <!-- ---Body--- -->
-      <tbody class="tb-refactor__tb__tbody">
+      <tbody class="tb-refactor__tb__tbody" v-for="(item, i) in [1,2,3,4,5,6]" v-bind:key="i">
         <tr>
-          <td scope="row">1</td>
-          <td>Mark</td>
+          <td>{{i}}</td>
+          <td>sdfv</td>
           <td>Otto</td>
           <td>@mdo</td>
+          <td>Otto</td>
+          <td><i class="bi bi-three-dots-vertical"></i></td>
         </tr>
       </tbody>
     </table>
@@ -71,13 +125,13 @@ export default {
 //-colors-
 $c__hide: rgba(0, 0, 0, 0.2);
 $c__default: rgb(168, 168, 168);
-$c__default-dark: rgb(0, 0, 0);
+$c__default-dark: rgb(94, 94, 94);
 $c__primary: #0da692;
 $c__primary-light: #13ddc2;
 $c__primary-dark: #0b7769;
 $c__header-table: #f3f2f7;
 //-Padding-
-$pl__thead:1.5em;
+$pl__thead: 1.5em;
 
 // ---Table---
 .tb-refactor {
@@ -88,7 +142,7 @@ $pl__thead:1.5em;
   width: 100%;
   margin: 3em;
   border-radius: 0.3em;
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
 
   .tb-refactor__menu {
     display: flex;
@@ -109,6 +163,7 @@ $pl__thead:1.5em;
     @extend .tb-refactor__menu__div;
     justify-content: flex-end;
   }
+
   // --Div-input adn icon---
   .tb-refactor__menu__div1__div-input {
     display: flex;
@@ -130,6 +185,7 @@ $pl__thead:1.5em;
     transform: rotate(-180deg);
     transition-duration: 200ms;
   }
+
   //--Button tb-refactor__menu__div2---
   .tb-refactor__menu__div2 > button {
     background-color: $c__primary;
@@ -146,6 +202,7 @@ $pl__thead:1.5em;
   .tb-refactor__menu__div2 > button:active {
     box-shadow: none;
   }
+
   // ---Inputs---
   .tb-refactor__input {
     border-color: $c__default;
@@ -174,27 +231,51 @@ $pl__thead:1.5em;
   .tb-refactor__input__pag {
     @extend .tb-refactor__input;
     width: 5em;
+    padding-right: 1.5em
   }
   .tb-refactor__input__search {
     @extend .tb-refactor__input;
     width: 60%;
+     padding-right: 1em
   }
+
   // ---Thead---
   .tb-refactor__tb__thead {
     background-color: $c__header-table;
     text-align: start;
+   
   }
-    .tb-refactor__tb__thead > tr >th {
+  .tb-refactor__tb__thead > tr > th {
     padding-left: $pl__thead;
+    cursor: pointer;
+  }
+  .tb-refactor__tb__thead__div {
+    display: flex;
+    align-content: center;
+  }
+  .tb-refactor__tb__thead__div > span {
+    color: $c__default-dark;
+    font-size: 0.8em;
+  }
+  .tb-refactor__tb__thead__div__div-icon {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    color: $c__default;
+  }
+  .tb-refactor__tb__thead__div__div-icon > i {
+    max-height: 1em;
+    font-size: 0.6em;
   }
 
   //---Tbody---
-    .tb-refactor__tb__tbody {
+  .tb-refactor__tb__tbody {
     text-align: start;
+     border-width: 0.1em;
   }
   .tb-refactor__tb__tbody > tr > td {
     padding-left: $pl__thead;
+    
   }
-
 }
 </style>
