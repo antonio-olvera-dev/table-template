@@ -12,16 +12,11 @@
               iconBool1 = true;
               openOptions(true);
             "
-          >
+            @blur="openOptions(false);iconBool1 = false;">
             <span>
               {{ valueOptions }}
             </span>
-            <i
-              v-bind:class="{
-                'tb-refactor__menudrop-down__icon-active': iconBool1,
-              }"
-              class="bi bi-chevron-down"
-            ></i>
+            <i v-bind:class="{ 'tb-refactor__menudrop-down__icon-active': iconBool1, }" class="bi bi-chevron-down" ></i>
           </button>
         </div>
         <div class="tb-refactor__menu__div1__options" v-if="optionsBool">
@@ -57,11 +52,12 @@
       <!-- ---Search--- -->
       <div class="tb-refactor__menu__div2">
         <input
+        v-model="valueSearch"
           placeholder="Search..."
           class="tb-refactor__input__search"
           type="text"
         />
-        <button class="btn" type="button">Add User</button>
+        <button @click="actionButton" class="btn" type="button">Add User</button>
       </div>
     </div>
 
@@ -70,56 +66,19 @@
       <!-- ---Head--- -->
       <thead class="tb-refactor__tb__thead">
         <tr>
-          <th scope="col">
+          <th scope="col" 
+          v-for="(value, i) in obje"
+          v-bind:key="i"
+           >
             <div class="tb-refactor__tb__thead__div">
-              <span>USER</span>
+              <span>{{value.toUpperCase()}}</span>
               <div class="tb-refactor__tb__thead__div__div-icon">
                 <i class="bi bi-chevron-up"></i>
                 <i class="bi bi-chevron-down"></i>
               </div>
             </div>
           </th>
-
-          <th scope="col">
-            <div class="tb-refactor__tb__thead__div">
-              <span>EMAIL</span>
-              <div class="tb-refactor__tb__thead__div__div-icon">
-                <i class="bi bi-chevron-up"></i>
-                <i class="bi bi-chevron-down"></i>
-              </div>
-            </div>
-          </th>
-
-          <th scope="col">
-            <div class="tb-refactor__tb__thead__div">
-              <span>ROLE</span>
-              <div class="tb-refactor__tb__thead__div__div-icon">
-                <i class="bi bi-chevron-up"></i>
-                <i class="bi bi-chevron-down"></i>
-              </div>
-            </div>
-          </th>
-
-          <th scope="col">
-            <div class="tb-refactor__tb__thead__div">
-              <span>PLAN</span>
-              <div class="tb-refactor__tb__thead__div__div-icon">
-                <i class="bi bi-chevron-up"></i>
-                <i class="bi bi-chevron-down"></i>
-              </div>
-            </div>
-          </th>
-
-          <th scope="col">
-            <div class="tb-refactor__tb__thead__div">
-              <span>STATUS</span>
-              <div class="tb-refactor__tb__thead__div__div-icon">
-                <i class="bi bi-chevron-up"></i>
-                <i class="bi bi-chevron-down"></i>
-              </div>
-            </div>
-          </th>
-
+           
           <th scope="col">
             <div class="tb-refactor__tb__thead__div">
               <span>ACTION</span>
@@ -131,7 +90,7 @@
       <!-- ---Body--- -->
       <tbody
         class="tb-refactor__tb__tbody"
-        v-for="(item, i) in [1, 2, 3, 4, 5, 6]"
+        v-for="(item, i) in obje"
         v-bind:key="i"
       >
         <tr>
@@ -140,7 +99,16 @@
           <td>Otto</td>
           <td>@mdo</td>
           <td>Otto</td>
-          <td><i class="bi bi-three-dots-vertical"></i></td>
+          <td>
+    <md-menu md-size="small">
+      <button class="btn tb-refactor__tb__tbody__md-btn" md-menu-trigger><i class="bi bi-three-dots-vertical"></i></button>
+      <md-menu-content>
+        <md-menu-item @click="actionAction(0, i)">My Item 1</md-menu-item>
+        <md-menu-item @click="actionAction(1, i)">My Item 2</md-menu-item>
+        <md-menu-item @click="actionAction(2, i)">My Item 3</md-menu-item>
+      </md-menu-content>
+    </md-menu>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -151,10 +119,12 @@
 export default {
   data() {
     return {
+      obje: ['User', 'Email', 'Role', 'Plan', 'Status'],
       iconBool1: false,
       optionsBool: false,
       valueOptions: "10",
       optionClass: { 0: true, 1: false, 2: false, 3: false, 4: false },
+      valueSearch: ""
     };
   },
   methods: {
@@ -165,6 +135,7 @@ export default {
     },
     sendOption(num) {
       this.valueOptions = num;
+      console.log(num);
       const table = document.getElementsByClassName("id-options");
       for (let i = 0; i < table.length; i++) {
         if (table[i].innerHTML == num) {
@@ -174,6 +145,13 @@ export default {
         }
       }
     },
+    actionButton(){
+      console.log(this.valueSearch);
+    },
+    actionAction(key, position){
+      console.log(key, position);
+    }
+        
   },
 };
 </script>
@@ -279,6 +257,17 @@ $pl__thead: 1.5em;
     background-color: white;
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
     user-select: none;
+    animation: anim-drop 200ms;
+  }
+  @keyframes anim-drop {
+    0%{transform: scale(0.5,0.5);
+    background: none;
+    color: none;
+    }
+    100%{transform: scale(1,1);
+    background: white;
+    color: black
+    }
   }
   .tb-refactor__menu__div1__options__ul {
     @extend .rst;
@@ -374,7 +363,7 @@ $pl__thead: 1.5em;
   }
   .tb-refactor__tb__thead__div > span {
     color: $c__default-dark;
-    font-size: 0.8em;
+    font-size: 1em;
   }
   .tb-refactor__tb__thead__div__div-icon {
     display: flex;
@@ -394,6 +383,11 @@ $pl__thead: 1.5em;
   }
   .tb-refactor__tb__tbody > tr > td {
     padding-left: $pl__thead;
+  }
+  .tb-refactor__tb__tbody__md-btn{
+    &:hover{transform: scale(1.1,1.1);}
+    &:focus{box-shadow: none;}
+    transition-duration: 100ms;
   }
 }
 </style>
