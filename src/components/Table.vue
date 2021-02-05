@@ -67,14 +67,15 @@
       <thead class="tb-refactor__tb__thead">
         <tr>
           <th scope="col" 
+          @click="actionHead(i)"
           v-for="(value, i) in obje"
           v-bind:key="i"
            >
             <div class="tb-refactor__tb__thead__div">
               <span>{{value.toUpperCase()}}</span>
               <div class="tb-refactor__tb__thead__div__div-icon">
-                <i class="bi bi-chevron-up"></i>
-                <i class="bi bi-chevron-down"></i>
+                <i class="bi bi-chevron-up" v-bind:class="{'tb-refactor__tb__thead__div__div-icon__i-active': !objectHead[`${i}-up`]}"></i>
+                <i class="bi bi-chevron-down" v-bind:class="{'tb-refactor__tb__thead__div__div-icon__i-active': !objectHead[`${i}-down`]}"></i>
               </div>
             </div>
           </th>
@@ -94,11 +95,12 @@
         v-bind:key="i"
       >
         <tr>
-          <td>{{ i }}</td>
-          <td>sdfv</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Otto</td>
+          <td class="align-middle">{{ i }}</td>
+          <td class="align-middle">sdfv</td>
+          <td class="align-middle">Otto</td>
+          <td class="align-middle">@mdo</td>
+          <td class="align-middle">Otto</td>
+
           <td>
     <md-menu md-size="small">
       <button class="btn tb-refactor__tb__tbody__md-btn" md-menu-trigger><i class="bi bi-three-dots-vertical"></i></button>
@@ -124,14 +126,15 @@ export default {
       optionsBool: false,
       valueOptions: "10",
       optionClass: { 0: true, 1: false, 2: false, 3: false, 4: false },
-      valueSearch: ""
+      valueSearch: "",
+      objectHead:[]
     };
   },
   methods: {
     openOptions(stat) {
       setTimeout(() => {
         this.optionsBool = stat;
-      }, 100);
+      }, 200);
     },
     sendOption(num) {
       this.valueOptions = num;
@@ -150,9 +153,43 @@ export default {
     },
     actionAction(key, position){
       console.log(key, position);
+    },
+    actionHead(position){
+      console.log(position);
+      
+     for (let i = 0; i < this.obje.length; i++) {
+      if (position != i) {
+        this.objectHead[`${i}-up`] = true;
+        this.objectHead[`${i}-down`] = true;
+      }
+     }
+      //--Animaciopnes---
+      if (this.objectHead[`${position}-up`] && this.objectHead[`${position}-down`]) {
+        this.objectHead[`${position}-up`] = false;
+        return true;
+      }
+       this.objectHead[`${position}-up`] = !this.objectHead[`${position}-up`];
+       this.objectHead[`${position}-down`] = !this.objectHead[`${position}-down`];
     }
         
   },
+  mounted(){
+    //------Inicio------
+    // <i class="bi bi-chevron-up"></i>
+    // <i class="bi bi-chevron-down"></i>
+
+    let ob = "{"
+    for (let i = 0; i < this.obje.length; i++) {
+      ob += `"${i}-up": "true" ,`;
+      ob += `"${i}-down": "true" ,`
+    }
+    ob = ob.substring(0,ob.length-1)+"}";
+    const newOb = JSON.parse(ob);
+    this.objectHead = newOb;
+
+    //console.log(this.objectHead['0-up']);
+
+  }
 };
 </script>
 
@@ -367,27 +404,39 @@ $pl__thead: 1.5em;
   }
   .tb-refactor__tb__thead__div__div-icon {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     margin-left: auto;
-    color: $c__default;
+    color: $c__default-light;
+    margin-top: -1em;
+    &__i-active{
+      color: black;
+
+    }
   }
   .tb-refactor__tb__thead__div__div-icon > i {
     max-height: 1em;
     font-size: 0.6em;
+    
   }
 
   //---Tbody---
   .tb-refactor__tb__tbody {
     text-align: start;
     border-width: 0.1em;
-  }
-  .tb-refactor__tb__tbody > tr > td {
+    
+    & > tr > td {
+    vertical-align: center;
     padding-left: $pl__thead;
   }
-  .tb-refactor__tb__tbody__md-btn{
+  &__md-btn{
     &:hover{transform: scale(1.1,1.1);}
     &:focus{box-shadow: none;}
     transition-duration: 100ms;
   }
+ 
+  }
+
+
 }
 </style>
